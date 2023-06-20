@@ -17,20 +17,19 @@ function doGet(e) {
 
       const spreadsheet = SpreadsheetApp.getActive();
       const sheet = spreadsheet.getSheetByName(sheetName);
-      const data = [];
       const lastRow = sheet.getLastRow();
       const lastColumn = sheet.getLastColumn();
       const values = sheet.getRange(1, 1, lastRow, lastColumn).getValues();
-      for (let i = 1; i < values.length; i++) {
-        const rowData = values[i];
-        const record = {};
-        for (let j = 0; j < lastColumn; j++) {
-          record[values[0][j]] = rowData[j];
-        }
-        data.push(record);
-      }
 
-      const filterable = filterAttributeContains(values[0], "Filterable");
+      const headers = values.shift();
+      const data = values.map((value) =>
+        value.reduce((accumulator, currentValue, index) => {
+          accumulator[headers[index]] = currentValue;
+          return accumulator;
+        }, {})
+      );
+
+      const filterable = filterAttributeContains(headers, "Filterable");
       const result = data.filter((record) =>
         filterable.some((field) =>
           `${record[field]}`.toLowerCase().includes(filter.toLowerCase())
