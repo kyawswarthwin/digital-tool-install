@@ -12,12 +12,12 @@ export const routes: Routes = [
       import('./pages/home/home.page').then((m) => m.HomePage),
   },
   {
-    path: 'items',
+    path: 'list',
     children: [
       {
         path: ':sheet',
         loadComponent: () =>
-          import('./pages/items/items.page').then((m) => m.ItemsPage),
+          import('./pages/list/list.page').then((m) => m.ListPage),
         children: [
           {
             path: '',
