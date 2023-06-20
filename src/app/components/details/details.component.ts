@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
 
@@ -10,10 +10,16 @@ import { IonicModule, ModalController } from '@ionic/angular';
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule],
 })
-export class DetailsComponent {
+export class DetailsComponent implements OnInit {
   @Input() data: any;
 
+  list: any;
+
   constructor(private modalCtrl: ModalController) {}
+
+  ngOnInit() {
+    this.list = Object.keys(this.data);
+  }
 
   async closeModal() {
     await this.modalCtrl.dismiss();

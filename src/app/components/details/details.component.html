@@ -10,74 +10,11 @@
 <ion-content>
   <ion-card>
     <ion-card-content>
-      <ion-item>
+      <ion-item *ngFor="let item of list">
         <ion-input
-          label="Package"
+          [label]="item"
           labelPlacement="stacked"
-          [value]="data['PACKAGE']"
-          [disabled]="true"
-        ></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-input
-          label="Spec"
-          labelPlacement="stacked"
-          [value]="data['SPEC']"
-          [disabled]="true"
-        ></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-input
-          label="Description"
-          labelPlacement="stacked"
-          [value]="data['Description-Original']"
-          [disabled]="true"
-        ></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-input
-          label="Material"
-          labelPlacement="stacked"
-          [value]="data['MATERIAL']"
-          [disabled]="true"
-        ></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-input
-          label="End Type"
-          labelPlacement="stacked"
-          [value]="data['ENDTYPE']"
-          [disabled]="true"
-        ></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-input
-          label="Size"
-          labelPlacement="stacked"
-          [value]="data['SIZE']"
-          [disabled]="true"
-        ></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-input
-          label="Item Code"
-          labelPlacement="stacked"
-          [value]="data['ITEM-CODE']"
-          [disabled]="true"
-        ></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-input
-          label="WBS Code"
-          labelPlacement="stacked"
-          [value]="data['WBS CODE']"
+          [value]="data[item]"
           [disabled]="true"
         ></ion-input>
       </ion-item>
