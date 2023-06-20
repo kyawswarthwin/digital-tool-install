@@ -12,13 +12,13 @@ import {
 } from '@ionic/angular';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.page.html',
-  styleUrls: ['./list.page.scss'],
+  selector: 'app-all-items',
+  templateUrl: './all-items.page.html',
+  styleUrls: ['./all-items.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule],
 })
-export class ListPage implements OnInit {
+export class AllItemsPage implements OnInit {
   sheet: any;
   list: any;
 
@@ -30,7 +30,7 @@ export class ListPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.sheet = this.route.snapshot.paramMap.get('sheet');
+    this.sheet = this.route.snapshot.parent?.params['sheet'];
   }
 
   async search(value: any) {

@@ -12,12 +12,33 @@ export const routes: Routes = [
       import('./pages/home/home.page').then((m) => m.HomePage),
   },
   {
-    path: 'list',
+    path: 'items',
     children: [
       {
         path: ':sheet',
         loadComponent: () =>
-          import('./pages/list/list.page').then((m) => m.ListPage),
+          import('./pages/items/items.page').then((m) => m.ItemsPage),
+        children: [
+          {
+            path: '',
+            redirectTo: 'all-items',
+            pathMatch: 'full',
+          },
+          {
+            path: 'all-items',
+            loadComponent: () =>
+              import('./pages/all-items/all-items.page').then(
+                (m) => m.AllItemsPage
+              ),
+          },
+          {
+            path: 'item-groups',
+            loadComponent: () =>
+              import('./pages/item-groups/item-groups.page').then(
+                (m) => m.ItemGroupsPage
+              ),
+          },
+        ],
       },
     ],
   },
