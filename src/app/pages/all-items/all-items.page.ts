@@ -74,7 +74,7 @@ export class AllItemsPage implements OnInit {
   findAttributeContain(keys: string[], attribute: string) {
     return keys.find((key) =>
       key
-        .split(':')
+        .split('|')
         .slice(1)
         .find((value) => value.toLowerCase() === attribute.toLowerCase())
     );

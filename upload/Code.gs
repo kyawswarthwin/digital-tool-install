@@ -50,7 +50,7 @@ function doGet(e) {
 function filterAttributeContains(keys, attribute) {
   return keys.filter((key) =>
     key
-      .split(":")
+      .split("|")
       .slice(1)
       .find((value) => value.toLowerCase() === attribute.toLowerCase())
   );
