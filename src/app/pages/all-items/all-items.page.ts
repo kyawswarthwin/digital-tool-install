@@ -21,6 +21,8 @@ import {
 export class AllItemsPage implements OnInit {
   sheetName: any;
   list: any;
+  titleKey: any;
+  subtitleKey: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,6 +43,12 @@ export class AllItemsPage implements OnInit {
 
     this.apiServ.filter(this.sheetName, value).subscribe((data) => {
       this.list = data;
+      const keys = Object.keys(data[0]);
+      this.titleKey = this.findAttributeContain(keys, 'Title') || keys[0];
+      this.subtitleKey = this.findAttributeContain(
+        Object.keys(data[0]),
+        'Subtitle'
+      );
 
       loading.dismiss();
     });
@@ -59,5 +67,14 @@ export class AllItemsPage implements OnInit {
     });
 
     await modal.present();
+  }
+
+  findAttributeContain(keys: string[], attribute: string) {
+    return keys.find((key) =>
+      key
+        .split(':')
+        .slice(1)
+        .find((value) => value.toLowerCase() === attribute.toLowerCase())
+    );
   }
 }
