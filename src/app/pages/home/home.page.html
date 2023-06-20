@@ -2,23 +2,12 @@
   <ion-toolbar>
     <ion-title>Digital Tool Install</ion-title>
   </ion-toolbar>
-  <ion-toolbar>
-    <ion-searchbar
-      placeholder="Search"
-      #filter
-      (keyup.enter)="search(filter.value)"
-      (ionClear)="clear()"
-    ></ion-searchbar>
-  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let item of list" button (click)="openDetails(item)">
-      <ion-label>
-        <h2>{{ item['Item Code'] }}</h2>
-        <p>{{ item['Description'] }}</p>
-      </ion-label>
+  <ion-list *ngIf="list">
+    <ion-item *ngFor="let item of list" button [routerLink]="['/list', item]">
+      <ion-label>{{ item }}</ion-label>
     </ion-item>
   </ion-list>
 </ion-content>

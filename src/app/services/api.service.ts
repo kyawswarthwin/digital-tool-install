@@ -12,6 +12,14 @@ const API_URL =
 export class ApiService {
   constructor(private http: HttpClient) {}
 
+  list(): Observable<any> {
+    const params = new URLSearchParams({
+      method: 'list',
+    });
+
+    return this.http.get(`${API_URL}?${params.toString()}`);
+  }
+
   filter(sheet: string, value: string): Observable<any> {
     const params = new URLSearchParams({
       method: 'filter',
