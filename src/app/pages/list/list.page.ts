@@ -39,7 +39,7 @@ export class ListPage implements OnInit {
     });
     loading.present();
 
-    this.apiServ.filter('Micron Components List', value).subscribe((data) => {
+    this.apiServ.filter(this.sheet, value).subscribe((data) => {
       this.list = data;
 
       loading.dismiss();

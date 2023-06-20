@@ -32,7 +32,9 @@ function doGet(e) {
       }
 
       const result = data.filter((record) =>
-        filterable.some((field) => record[field].includes(filter))
+        filterable.some((field) =>
+          `${record[field]}`.toLowerCase().includes(filter.toLowerCase())
+        )
       );
 
       return result;
