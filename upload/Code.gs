@@ -14,7 +14,6 @@ function doGet(e) {
     filter: (params) => {
       const sheetName = params.sheetName;
       const filter = params.filter;
-      const filterable = ["Item Code", "Description"];
 
       const spreadsheet = SpreadsheetApp.getActive();
       const sheet = spreadsheet.getSheetByName(sheetName);
@@ -31,6 +30,7 @@ function doGet(e) {
         data.push(record);
       }
 
+      const filterable = filterAttributeContains(values[0], "Filterable");
       const result = data.filter((record) =>
         filterable.some((field) =>
           `${record[field]}`.toLowerCase().includes(filter.toLowerCase())
@@ -45,5 +45,14 @@ function doGet(e) {
 
   return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(
     ContentService.MimeType.JSON
+  );
+}
+
+function filterAttributeContains(keys, attribute) {
+  return keys.filter((key) =>
+    key
+      .split(":")
+      .slice(1)
+      .find((value) => value.toLowerCase() === attribute.toLowerCase())
   );
 }
