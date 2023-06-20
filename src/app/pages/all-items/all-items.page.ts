@@ -19,7 +19,7 @@ import {
   imports: [IonicModule, CommonModule, FormsModule],
 })
 export class AllItemsPage implements OnInit {
-  sheet: any;
+  sheetName: any;
   list: any;
 
   constructor(
@@ -30,7 +30,7 @@ export class AllItemsPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.sheet = this.route.snapshot.parent?.params['sheet'];
+    this.sheetName = this.route.snapshot.parent?.params['sheetName'];
   }
 
   async search(value: any) {
@@ -39,7 +39,7 @@ export class AllItemsPage implements OnInit {
     });
     loading.present();
 
-    this.apiServ.filter(this.sheet, value).subscribe((data) => {
+    this.apiServ.filter(this.sheetName, value).subscribe((data) => {
       this.list = data;
 
       loading.dismiss();

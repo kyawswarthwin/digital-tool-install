@@ -15,7 +15,7 @@ export const routes: Routes = [
     path: 'list',
     children: [
       {
-        path: ':sheet',
+        path: ':sheetName',
         loadComponent: () =>
           import('./pages/list/list.page').then((m) => m.ListPage),
         children: [

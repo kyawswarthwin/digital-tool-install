@@ -12,7 +12,7 @@ function doGet(e) {
       return result;
     },
     filter: (params) => {
-      const sheetName = params.sheet;
+      const sheetName = params.sheetName;
       const filter = params.filter;
       const filterable = ["Item Code", "Description"];
 

@@ -12,11 +12,11 @@ import { IonicModule } from '@ionic/angular';
   imports: [IonicModule, CommonModule, FormsModule],
 })
 export class ItemGroupsPage implements OnInit {
-  sheet: any;
+  sheetName: any;
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.sheet = this.route.snapshot.parent?.params['sheet'];
+    this.sheetName = this.route.snapshot.parent?.params['sheetName'];
   }
 }
