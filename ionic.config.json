@@ -1,0 +1,7 @@
+{
+  "name": "Digital Tool Install",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
