@@ -22,7 +22,7 @@ export class AllItemsPage implements OnInit {
   sheetName: any;
   list: any;
   titleKey: any;
-  subtitleKey: any;
+  descriptionKey: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -45,9 +45,9 @@ export class AllItemsPage implements OnInit {
       this.list = data;
       const keys = Object.keys(data[0]);
       this.titleKey = this.findAttributeContain(keys, 'Title') || keys[0];
-      this.subtitleKey = this.findAttributeContain(
+      this.descriptionKey = this.findAttributeContain(
         Object.keys(data[0]),
-        'Subtitle'
+        'Description'
       );
 
       loading.dismiss();

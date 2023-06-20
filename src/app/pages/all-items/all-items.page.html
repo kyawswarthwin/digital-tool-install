@@ -25,7 +25,7 @@
     <ion-item *ngFor="let item of list" button (click)="openDetails(item)">
       <ion-label>
         <h2>{{ item[titleKey] }}</h2>
-        <p *ngIf="subtitleKey">{{ item[subtitleKey] }}</p>
+        <p *ngIf="descriptionKey">{{ item[descriptionKey] }}</p>
       </ion-label>
     </ion-item>
   </ion-list>
