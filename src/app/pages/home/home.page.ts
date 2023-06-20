@@ -4,7 +4,11 @@ import { ApiService } from 'src/app/services/api.service';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, LoadingController, ModalController } from '@ionic/angular';
+import {
+  IonicModule,
+  LoadingController,
+  ModalController,
+} from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -28,7 +32,7 @@ export class HomePage {
     });
     loading.present();
 
-    this.apiServ.filter(value).subscribe((data) => {
+    this.apiServ.filter('Micron Components List', value).subscribe((data) => {
       this.list = data;
 
       loading.dismiss();

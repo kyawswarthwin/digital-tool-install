@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 const API_URL =
-  'https://script.google.com/macros/s/AKfycbylxw_j1e5yOAydNW2LUBDBm_NFv-hn-8Vvn-Mv_cROB4BWZ_Gnsutqe3GofA2O06yDdw/exec';
+  'https://script.google.com/macros/s/AKfycbz_vvmzGQb7IEvTy6HUf_lDgTUPPp_dKFucDIXCkimKp4JOe5L8pQ13LpgG6MpwfzwV/exec';
 
 @Injectable({
   providedIn: 'root',
@@ -12,9 +12,13 @@ const API_URL =
 export class ApiService {
   constructor(private http: HttpClient) {}
 
-  filter(value: string): Observable<any> {
+  filter(sheet: string, value: string): Observable<any> {
     const params = new URLSearchParams({
-      filter: value,
+      method: 'filter',
+      params: JSON.stringify({
+        sheet,
+        filter: value,
+      }),
     });
 
     return this.http.get(`${API_URL}?${params.toString()}`);
