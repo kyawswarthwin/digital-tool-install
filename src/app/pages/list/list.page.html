@@ -12,6 +12,11 @@
       (keyup.enter)="search(filter.value)"
       (ionClear)="clear()"
     ></ion-searchbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="search(filter.value)">
+        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
