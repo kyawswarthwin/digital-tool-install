@@ -4,13 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-details',
-  templateUrl: './details.component.html',
-  styleUrls: ['./details.component.scss'],
+  selector: 'app-item-details',
+  templateUrl: './item-details.component.html',
+  styleUrls: ['./item-details.component.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule],
 })
-export class DetailsComponent implements OnInit {
+export class ItemDetailsComponent implements OnInit {
   @Input() data: any;
 
   list: any;

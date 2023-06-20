@@ -1,4 +1,4 @@
-import { DetailsComponent } from 'src/app/components/details/details.component';
+import { ItemDetailsComponent } from 'src/app/components/item-details/item-details.component';
 import { ApiService } from 'src/app/services/api.service';
 
 import { CommonModule } from '@angular/common';
@@ -60,7 +60,7 @@ export class AllItemsPage implements OnInit {
 
   async openDetails(data: any) {
     const modal = await this.modalCtrl.create({
-      component: DetailsComponent,
+      component: ItemDetailsComponent,
       componentProps: {
         data,
       },
