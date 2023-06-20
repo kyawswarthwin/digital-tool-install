@@ -29,7 +29,9 @@ export class HomePage implements OnInit {
     loading.present();
 
     this.apiServ.list().subscribe((data) => {
-      this.list = data;
+      if (data.length) {
+        this.list = data;
+      }
 
       loading.dismiss();
     });

@@ -42,13 +42,15 @@ export class AllItemsPage implements OnInit {
     loading.present();
 
     this.apiServ.filter(this.sheetName, value).subscribe((data) => {
-      this.list = data;
-      const keys = Object.keys(data[0]);
-      this.titleKey = this.findAttributeContain(keys, 'Title') || keys[0];
-      this.descriptionKey = this.findAttributeContain(
-        Object.keys(data[0]),
-        'Description'
-      );
+      if (data.length) {
+        this.list = data;
+        const keys = Object.keys(data[0]);
+        this.titleKey = this.findAttributeContain(keys, 'Title') || keys[0];
+        this.descriptionKey = this.findAttributeContain(
+          Object.keys(data[0]),
+          'Description'
+        );
+      }
 
       loading.dismiss();
     });
