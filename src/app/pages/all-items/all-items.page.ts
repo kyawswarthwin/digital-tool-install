@@ -42,7 +42,7 @@ export class AllItemsPage implements OnInit {
     });
     loading.present();
 
-    this.apiServ.filter(this.sheetName, value).subscribe(({ data, meta }) => {
+    this.apiServ.allItems(this.sheetName, value).subscribe(({ data, meta }) => {
       if (data?.length) {
         this.list = data;
         this.meta = meta;

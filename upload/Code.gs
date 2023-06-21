@@ -11,7 +11,7 @@ function doGet(e) {
 
       return result;
     },
-    filter: (params) => {
+    allItems: (params) => {
       const { sheetName, filter } = params;
 
       const data = getData(sheetName);
