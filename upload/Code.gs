@@ -15,21 +15,9 @@ function doGet(e) {
       const sheetName = params.sheetName;
       const filter = params.filter;
 
-      const spreadsheet = SpreadsheetApp.getActive();
-      const sheet = spreadsheet.getSheetByName(sheetName);
-      const lastRow = sheet.getLastRow();
-      const lastColumn = sheet.getLastColumn();
-      const values = sheet.getRange(1, 1, lastRow, lastColumn).getValues();
+      const { columns, data } = getData(sheetName);
 
-      const headers = values.shift();
-      const data = values.map((value) =>
-        value.reduce((accumulator, currentValue, index) => {
-          accumulator[headers[index]] = currentValue;
-          return accumulator;
-        }, {})
-      );
-
-      const filterable = filterAttributeContains(headers, "Filterable");
+      const filterable = filterAttributeContains(columns, "Filterable");
       const result = data.filter((record) =>
         filterable.some((field) =>
           `${record[field]}`.toLowerCase().includes(filter.toLowerCase())
@@ -45,6 +33,27 @@ function doGet(e) {
   return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(
     ContentService.MimeType.JSON
   );
+}
+
+function getData(sheetName) {
+  const spreadsheet = SpreadsheetApp.getActive();
+  const sheet = spreadsheet.getSheetByName(sheetName);
+  const lastRow = sheet.getLastRow();
+  const lastColumn = sheet.getLastColumn();
+  const values = sheet.getRange(1, 1, lastRow, lastColumn).getValues();
+
+  const columns = values.shift();
+  const data = values.map((value) =>
+    value.reduce((accumulator, currentValue, index) => {
+      accumulator[columns[index]] = currentValue;
+      return accumulator;
+    }, {})
+  );
+
+  return {
+    columns,
+    data,
+  };
 }
 
 function filterAttributeContains(keys, attribute) {
