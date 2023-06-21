@@ -46,11 +46,9 @@ export class AllItemsPage implements OnInit {
       if (data?.length) {
         this.list = data;
         this.meta = meta;
-        this.titleKey = this.filterPropertyContains(
-          meta,
-          'type',
-          'title'
-        ).shift();
+        this.titleKey =
+          this.filterPropertyContains(meta, 'type', 'title').shift() ||
+          Object.keys(data[0])[0];
         this.descriptionKey = this.filterPropertyContains(
           meta,
           'type',
