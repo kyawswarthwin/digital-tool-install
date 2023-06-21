@@ -12,15 +12,14 @@ function doGet(e) {
       return result;
     },
     filter: (params) => {
-      const sheetName = params.sheetName;
-      const filter = params.filter;
+      const { sheetName, filter } = params;
 
       const { columns, data } = getData(sheetName);
 
       const filterable = filterAttributeContains(columns, "Filterable");
       const result = data.filter((record) =>
-        filterable.some((field) =>
-          `${record[field]}`.toLowerCase().includes(filter.toLowerCase())
+        filterable.some((column) =>
+          `${record[column]}`.toLowerCase().includes(filter.toLowerCase())
         )
       );
 
