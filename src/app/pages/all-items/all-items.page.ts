@@ -21,6 +21,7 @@ import {
 export class AllItemsPage implements OnInit {
   sheetName: any;
   list: any;
+  meta: any;
   titleKey: any;
   descriptionKey: any;
 
@@ -44,6 +45,7 @@ export class AllItemsPage implements OnInit {
     this.apiServ.filter(this.sheetName, value).subscribe(({ data, meta }) => {
       if (data?.length) {
         this.list = data;
+        this.meta = meta;
         this.titleKey = this.filterPropertyContains(
           meta,
           'type',
@@ -64,11 +66,12 @@ export class AllItemsPage implements OnInit {
     this.list = [];
   }
 
-  async openDetails(data: any) {
+  async openDetails(data: any, meta: any) {
     const modal = await this.modalCtrl.create({
       component: ItemDetailsComponent,
       componentProps: {
         data,
+        meta,
       },
     });
 

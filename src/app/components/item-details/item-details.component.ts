@@ -12,6 +12,7 @@ import { IonicModule, ModalController } from '@ionic/angular';
 })
 export class ItemDetailsComponent implements OnInit {
   @Input() data: any;
+  @Input() meta: any;
 
   list: any;
 

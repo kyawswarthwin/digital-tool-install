@@ -22,7 +22,11 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let item of list" button (click)="openDetails(item)">
+    <ion-item
+      *ngFor="let item of list"
+      button
+      (click)="openDetails(item, meta)"
+    >
       <ion-label>
         <h2>{{ item[titleKey] }}</h2>
         <p *ngIf="descriptionKey">{{ item[descriptionKey] }}</p>
