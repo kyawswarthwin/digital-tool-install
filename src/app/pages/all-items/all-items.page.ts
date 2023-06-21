@@ -41,15 +41,19 @@ export class AllItemsPage implements OnInit {
     });
     loading.present();
 
-    this.apiServ.filter(this.sheetName, value).subscribe((data) => {
+    this.apiServ.filter(this.sheetName, value).subscribe(({ data, meta }) => {
       if (data.length) {
         this.list = data;
-        const keys = Object.keys(data[0]);
-        this.titleKey = this.findAttributeContain(keys, 'Title') || keys[0];
-        this.descriptionKey = this.findAttributeContain(
-          Object.keys(data[0]),
-          'Description'
-        );
+        this.titleKey = this.filterPropertyContains(
+          meta,
+          'type',
+          'title'
+        ).shift();
+        this.descriptionKey = this.filterPropertyContains(
+          meta,
+          'type',
+          'description'
+        ).shift();
       }
 
       loading.dismiss();
@@ -71,12 +75,13 @@ export class AllItemsPage implements OnInit {
     await modal.present();
   }
 
-  findAttributeContain(keys: string[], attribute: string) {
-    return keys.find((key) =>
-      key
-        .split('|')
-        .slice(1)
-        .find((value) => value.toLowerCase() === attribute.toLowerCase())
-    );
+  filterPropertyContains(
+    object: any,
+    property: string,
+    filter: string
+  ): string[] {
+    return Object.entries<any>(object)
+      .filter(([key, value]) => new RegExp(filter, 'i').test(value[property]))
+      .reduce<any>((accumulator, [key, value]) => accumulator.concat(key), []);
   }
 }

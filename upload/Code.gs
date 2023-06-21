@@ -14,14 +14,24 @@ function doGet(e) {
     filter: (params) => {
       const { sheetName, filter } = params;
 
-      const { columns, data } = getData(sheetName);
+      const data = getData(sheetName);
+      const config = getConfig(sheetName);
 
-      const filterable = filterAttributeContains(columns, "Filterable");
-      const result = data.filter((record) =>
-        filterable.some((column) =>
-          `${record[column]}`.toLowerCase().includes(filter.toLowerCase())
-        )
-      );
+      const filterable = filterPropertyContains(config, "filterable", "true");
+      const sql = `SELECT * FROM ? WHERE ${filterable.reduce(
+        (accumulator, currentValue, index) => {
+          accumulator +=
+            index > 0
+              ? ` OR ${currentValue} LIKE '%${filter}%'`
+              : `${currentValue} LIKE '%${filter}%'`;
+          return accumulator;
+        },
+        ""
+      )};`;
+      const result = {
+        data: alasql(sql, [data]),
+        meta: config,
+      };
 
       return result;
     },
@@ -49,17 +59,21 @@ function getData(sheetName) {
     }, {})
   );
 
-  return {
-    columns,
-    data,
-  };
+  return data;
 }
 
-function filterAttributeContains(keys, attribute) {
-  return keys.filter((key) =>
-    key
-      .split("|")
-      .slice(1)
-      .find((value) => value.toLowerCase() === attribute.toLowerCase())
+function getConfig(sheetName) {
+  const config = JSON.parse(
+    DriveApp.getFileById("1QfnayBRPFl3ibhM9GFcFxrarkHL7FkTT")
+      .getBlob()
+      .getDataAsString()
   );
+
+  return config[sheetName];
+}
+
+function filterPropertyContains(object, property, filter) {
+  return Object.entries(object)
+    .filter(([key, value]) => new RegExp(filter, "i").test(value[property]))
+    .reduce((accumulator, [key, value]) => accumulator.concat(key), []);
 }

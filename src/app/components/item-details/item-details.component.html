@@ -12,7 +12,7 @@
     <ion-card-content>
       <ion-item *ngFor="let item of list">
         <ion-input
-          [label]="item.split('|')[0]"
+          [label]="item"
           labelPlacement="stacked"
           [value]="data[item]"
           [readonly]="true"
