@@ -29,7 +29,7 @@ export class HomePage implements OnInit {
     loading.present();
 
     this.apiServ.list().subscribe((data) => {
-      if (data.length) {
+      if (data?.length) {
         this.list = data;
       }
 

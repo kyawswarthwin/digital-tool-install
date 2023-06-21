@@ -18,16 +18,17 @@ function doGet(e) {
       const config = getConfig(sheetName);
 
       const filterable = filterPropertyContains(config, "filterable", "true");
-      const sql = `SELECT * FROM ? WHERE ${filterable.reduce(
-        (accumulator, currentValue, index) => {
-          accumulator +=
-            index > 0
-              ? ` OR ${currentValue} LIKE '%${filter}%'`
-              : `${currentValue} LIKE '%${filter}%'`;
-          return accumulator;
-        },
-        ""
-      )};`;
+      const sql = `SELECT * FROM ?${
+        filterable?.length
+          ? ` WHERE ${filterable.reduce((accumulator, currentValue, index) => {
+              accumulator +=
+                index > 0
+                  ? ` OR ${currentValue} LIKE '%${filter}%'`
+                  : `${currentValue} LIKE '%${filter}%'`;
+              return accumulator;
+            }, "")};`
+          : ""
+      }`;
       const result = {
         data: alasql(sql, [data]),
         meta: config,

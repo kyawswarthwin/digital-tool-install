@@ -42,7 +42,7 @@ export class AllItemsPage implements OnInit {
     loading.present();
 
     this.apiServ.filter(this.sheetName, value).subscribe(({ data, meta }) => {
-      if (data.length) {
+      if (data?.length) {
         this.list = data;
         this.titleKey = this.filterPropertyContains(
           meta,
