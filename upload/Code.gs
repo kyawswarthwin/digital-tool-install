@@ -67,10 +67,10 @@ function getConfig(sheetName) {
   const config = JSON.parse(
     DriveApp.getFileById("1QfnayBRPFl3ibhM9GFcFxrarkHL7FkTT")
       .getBlob()
-      .getDataAsString()
+      .getDataAsString() || "{}"
   );
 
-  return config[sheetName];
+  return config[sheetName] || {};
 }
 
 function filterPropertyContains(object, property, filter) {

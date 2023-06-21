@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 const API_URL =
-  'https://script.google.com/macros/s/AKfycbz8Yh1dFbrj1SSf03ElpANTXXH_bF0o31ezFmmiuXbqgCJQALkyHeHLj9mRJ_76DkW7pQ/exec';
+  'https://script.google.com/macros/s/AKfycbw-b-UVq7kIAlNbpZHsyMtuTH-Xv8V8WlgmV-z6HF6xY1W8YPA6Z9tZoohW0NLiXnu58w/exec';
 
 @Injectable({
   providedIn: 'root',
