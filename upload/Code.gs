@@ -53,6 +53,28 @@ function doGet(e) {
 
       return result;
     },
+    itemSubgroups: (params) => {
+      const { sheetName, group } = params;
+
+      const data = getData(sheetName);
+      const config = getConfig(sheetName);
+
+      const groupKey = filterPropertyContains(config, "type", "group").shift();
+      const subgroupKey = filterPropertyContains(
+        config,
+        "type",
+        "subgroup"
+      ).shift();
+      const sql = `SELECT ${subgroupKey} FROM ? WHERE ${groupKey}='${group}' GROUP BY ${subgroupKey} ORDER BY ${subgroupKey};`;
+      const result = {
+        data: alasql(sql, [data]),
+        meta: {
+          subgroupKey,
+        },
+      };
+
+      return result;
+    },
   };
 
   const result = functions[method](params);
