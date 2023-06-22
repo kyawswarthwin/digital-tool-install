@@ -14,11 +14,13 @@ import { IonicModule } from '@ionic/angular';
 export class ItemSubgroupsPage implements OnInit {
   sheetName: any;
   group: any;
+  defaultHref: any;
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.sheetName = this.route.snapshot.parent?.params['sheetName'];
     this.group = this.route.snapshot.paramMap.get('group');
+    this.defaultHref = `/list/${this.sheetName}/item-groups`;
   }
 }
