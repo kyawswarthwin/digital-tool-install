@@ -47,11 +47,11 @@ export class AllItemsPage implements OnInit {
         this.list = data;
         this.meta = meta;
         this.titleKey =
-          this.filterPropertyContains(meta, 'type', 'title').shift() ||
+          this.filterPropertyContains(meta, 'displayType', 'title').shift() ||
           Object.keys(data[0])[0];
         this.descriptionKey = this.filterPropertyContains(
           meta,
-          'type',
+          'displayType',
           'description'
         ).shift();
       }
