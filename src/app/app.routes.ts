@@ -43,10 +43,22 @@ export const routes: Routes = [
               },
               {
                 path: ':group',
-                loadComponent: () =>
-                  import('./pages/item-subgroups/item-subgroups.page').then(
-                    (m) => m.ItemSubgroupsPage
-                  ),
+                children: [
+                  {
+                    path: '',
+                    loadComponent: () =>
+                      import('./pages/item-subgroups/item-subgroups.page').then(
+                        (m) => m.ItemSubgroupsPage
+                      ),
+                  },
+                  {
+                    path: ':subgroups',
+                    loadComponent: () =>
+                      import('./pages/group-items/group-items.page').then(
+                        (m) => m.GroupItemsPage
+                      ),
+                  },
+                ],
               },
             ],
           },

@@ -3,7 +3,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { IonicModule, LoadingController } from '@ionic/angular';
 
 @Component({
@@ -11,7 +11,7 @@ import { IonicModule, LoadingController } from '@ionic/angular';
   templateUrl: './item-subgroups.page.html',
   styleUrls: ['./item-subgroups.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [IonicModule, CommonModule, FormsModule, RouterLink],
 })
 export class ItemSubgroupsPage implements OnInit {
   sheetName: any;
@@ -27,7 +27,8 @@ export class ItemSubgroupsPage implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.sheetName = this.route.snapshot.parent?.parent?.params['sheetName'];
+    this.sheetName =
+      this.route.snapshot.parent?.parent?.parent?.params['sheetName'];
     this.group = this.route.snapshot.paramMap.get('group');
     this.defaultHref = `/list/${this.sheetName}/item-groups`;
 
