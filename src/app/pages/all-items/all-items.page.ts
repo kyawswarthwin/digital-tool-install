@@ -20,6 +20,10 @@ import {
 })
 export class AllItemsPage implements OnInit {
   sheetName: any;
+  group: any;
+  subgroups: any;
+  defaultHref: any;
+  title: any;
   list: any;
   meta: any;
   titleKey: any;
@@ -33,7 +37,18 @@ export class AllItemsPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.sheetName = this.route.snapshot.parent?.params['sheetName'];
+    this.sheetName =
+      this.route.snapshot.parent?.params['sheetName'] ||
+      this.route.snapshot.parent?.parent?.parent?.params['sheetName'];
+    this.group = this.route.snapshot.paramMap.get('group');
+    this.subgroups = this.route.snapshot.paramMap.get('subgroups');
+    if (this.group) {
+      this.defaultHref = `/list/${this.sheetName}/item-groups/${this.group}`;
+      this.title = `${this.group} > ${this.subgroups}`;
+    } else {
+      this.defaultHref = '/home';
+      this.title = this.sheetName;
+    }
   }
 
   async search(value: any) {
