@@ -36,6 +36,23 @@ function doGet(e) {
 
       return result;
     },
+    itemGroups: (params) => {
+      const { sheetName } = params;
+
+      const data = getData(sheetName);
+      const config = getConfig(sheetName);
+
+      const groupKey = filterPropertyContains(config, "type", "group").shift();
+      const sql = `SELECT ${groupKey} FROM ? GROUP BY ${groupKey} ORDER BY ${groupKey};`;
+      const result = {
+        data: alasql(sql, [data]),
+        meta: {
+          groupKey,
+        },
+      };
+
+      return result;
+    },
   };
 
   const result = functions[method](params);

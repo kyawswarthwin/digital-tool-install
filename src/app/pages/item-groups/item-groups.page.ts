@@ -1,8 +1,10 @@
+import { ApiService } from 'src/app/services/api.service';
+
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-item-groups',
@@ -13,10 +15,30 @@ import { IonicModule } from '@ionic/angular';
 })
 export class ItemGroupsPage implements OnInit {
   sheetName: any;
+  list: any;
+  groupKey: any;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private loadingCtrl: LoadingController,
+    private apiServ: ApiService
+  ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.sheetName = this.route.snapshot.parent?.params['sheetName'];
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading...',
+    });
+    loading.present();
+
+    this.apiServ.itemGroups(this.sheetName).subscribe(({ data, meta }) => {
+      if (data?.length) {
+        this.list = data;
+        this.groupKey = meta.groupKey;
+      }
+
+      loading.dismiss();
+    });
   }
 }
