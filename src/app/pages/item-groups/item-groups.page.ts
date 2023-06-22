@@ -3,7 +3,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { IonicModule, LoadingController } from '@ionic/angular';
 
 @Component({
@@ -11,7 +11,7 @@ import { IonicModule, LoadingController } from '@ionic/angular';
   templateUrl: './item-groups.page.html',
   styleUrls: ['./item-groups.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [IonicModule, CommonModule, FormsModule, RouterLink],
 })
 export class ItemGroupsPage implements OnInit {
   sheetName: any;
@@ -25,7 +25,7 @@ export class ItemGroupsPage implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.sheetName = this.route.snapshot.parent?.params['sheetName'];
+    this.sheetName = this.route.snapshot.parent?.parent?.params['sheetName'];
 
     const loading = await this.loadingCtrl.create({
       message: 'Loading...',

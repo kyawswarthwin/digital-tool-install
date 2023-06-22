@@ -9,7 +9,11 @@
 
 <ion-content>
   <ion-list *ngIf="list">
-    <ion-item *ngFor="let item of list" button>
+    <ion-item
+      *ngFor="let item of list"
+      button
+      [routerLink]="['/list', sheetName, 'item-groups', item[groupKey]]"
+    >
       <ion-label>{{ item[groupKey] }}</ion-label>
     </ion-item>
   </ion-list>
