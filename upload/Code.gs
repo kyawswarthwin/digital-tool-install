@@ -114,6 +114,9 @@ function getConfig(sheetName) {
 
 function filterPropertyContains(object, property, filter) {
   return Object.entries(object)
-    .filter(([key, value]) => new RegExp(filter, "i").test(value[property]))
+    .filter(
+      ([key, value]) =>
+        `${value[property]}`.toLowerCase() === `${filter}`.toLowerCase()
+    )
     .reduce((accumulator, [key, value]) => accumulator.concat(key), []);
 }
