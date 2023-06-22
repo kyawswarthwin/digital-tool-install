@@ -12,23 +12,57 @@ function doGet(e) {
       return result;
     },
     allItems: (params) => {
-      const { sheetName, filter } = params;
+      const { sheetName, group, subgroup, filter } = params;
 
       const data = getData(sheetName);
       const config = getConfig(sheetName);
 
+      const groupKey = filterPropertyContains(config, "type", "group").shift();
+      const subgroupKey = filterPropertyContains(
+        config,
+        "type",
+        "subgroup"
+      ).shift();
       const filterable = filterPropertyContains(config, "filterable", "true");
-      const sql = `SELECT * FROM ?${
-        filterable?.length
-          ? ` WHERE ${filterable.reduce((accumulator, currentValue, index) => {
-              accumulator +=
-                index > 0
-                  ? ` OR ${currentValue} LIKE '%${filter}%'`
-                  : `${currentValue} LIKE '%${filter}%'`;
-              return accumulator;
-            }, "")};`
-          : ""
-      }`;
+
+      let sql = "SELECT * FROM ?";
+      if (
+        (groupKey && group) ||
+        (groupKey && group && subgroupKey && subgroup) ||
+        (filterable?.length && filter)
+      ) {
+        sql += " WHERE";
+        if (groupKey && group) {
+          sql += ` ${groupKey}='${group}'`;
+        }
+        if (groupKey && group && subgroupKey && subgroup) {
+          sql += ` AND ${subgroupKey}='${subgroup}'`;
+        }
+        if (filterable?.length && filter) {
+          if (
+            (groupKey && group) ||
+            (groupKey && group && subgroupKey && subgroup)
+          ) {
+            sql += " AND (";
+          } else {
+            sql += " ";
+          }
+          sql += filterable.reduce((accumulator, currentValue, index) => {
+            if (index > 0) {
+              accumulator += " OR ";
+            }
+            accumulator += `${currentValue} LIKE '%${filter}%'`;
+            return accumulator;
+          }, "");
+          if (
+            (groupKey && group) ||
+            (groupKey && group && subgroupKey && subgroup)
+          ) {
+            sql += ")";
+          }
+        }
+      }
+      sql += ";";
       const result = {
         data: alasql(sql, [data]),
         meta: config,
@@ -43,6 +77,7 @@ function doGet(e) {
       const config = getConfig(sheetName);
 
       const groupKey = filterPropertyContains(config, "type", "group").shift();
+
       const sql = `SELECT ${groupKey} FROM ? GROUP BY ${groupKey} ORDER BY ${groupKey};`;
       const result = {
         data: alasql(sql, [data]),
@@ -65,6 +100,7 @@ function doGet(e) {
         "type",
         "subgroup"
       ).shift();
+
       const sql = `SELECT ${subgroupKey} FROM ? WHERE ${groupKey}='${group}' GROUP BY ${subgroupKey} ORDER BY ${subgroupKey};`;
       const result = {
         data: alasql(sql, [data]),
