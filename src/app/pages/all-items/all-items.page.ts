@@ -104,7 +104,10 @@ export class AllItemsPage implements OnInit {
     filter: string
   ): string[] {
     return Object.entries<any>(object)
-      .filter(([key, value]) => new RegExp(filter, 'i').test(value[property]))
+      .filter(
+        ([key, value]) =>
+          `${value[property]}`.toLowerCase() === `${filter}`.toLowerCase()
+      )
       .reduce<any>((accumulator, [key, value]) => accumulator.concat(key), []);
   }
 }
