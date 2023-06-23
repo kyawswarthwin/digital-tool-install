@@ -45,13 +45,14 @@ export class AllItemsPage implements OnInit {
     if (this.group) {
       this.defaultHref = `/list/${this.sheetName}/item-groups/${this.group}`;
       this.title = `${this.group} > ${this.subgroup}`;
+      this.search();
     } else {
       this.defaultHref = '/home';
       this.title = this.sheetName;
     }
   }
 
-  async search(value: any) {
+  async search(value?: any) {
     const loading = await this.loadingCtrl.create({
       message: 'Loading...',
     });
