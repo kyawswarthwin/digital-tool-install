@@ -52,7 +52,7 @@ export const routes: Routes = [
                       ),
                   },
                   {
-                    path: ':subgroups',
+                    path: ':subgroup',
                     loadComponent: () =>
                       import('./pages/all-items/all-items.page').then(
                         (m) => m.AllItemsPage

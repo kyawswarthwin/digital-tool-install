@@ -20,12 +20,14 @@ export class ApiService {
     return this.http.get(`${API_URL}?${params.toString()}`);
   }
 
-  allItems(sheetName: string, filter: string): Observable<any> {
+  allItems(sheetName: string, filter: any = {}): Observable<any> {
     const params = new URLSearchParams({
       method: 'allItems',
       params: JSON.stringify({
         sheetName,
-        filter,
+        group: filter?.group,
+        subgroup: filter?.subgroup,
+        filter: filter?.filter,
       }),
     });
 

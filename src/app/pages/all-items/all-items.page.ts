@@ -21,7 +21,7 @@ import {
 export class AllItemsPage implements OnInit {
   sheetName: any;
   group: any;
-  subgroups: any;
+  subgroup: any;
   defaultHref: any;
   title: any;
   list: any;
@@ -41,10 +41,10 @@ export class AllItemsPage implements OnInit {
       this.route.snapshot.parent?.params['sheetName'] ||
       this.route.snapshot.parent?.parent?.parent?.params['sheetName'];
     this.group = this.route.snapshot.paramMap.get('group');
-    this.subgroups = this.route.snapshot.paramMap.get('subgroups');
+    this.subgroup = this.route.snapshot.paramMap.get('subgroup');
     if (this.group) {
       this.defaultHref = `/list/${this.sheetName}/item-groups/${this.group}`;
-      this.title = `${this.group} > ${this.subgroups}`;
+      this.title = `${this.group} > ${this.subgroup}`;
     } else {
       this.defaultHref = '/home';
       this.title = this.sheetName;
@@ -57,22 +57,28 @@ export class AllItemsPage implements OnInit {
     });
     loading.present();
 
-    this.apiServ.allItems(this.sheetName, value).subscribe(({ data, meta }) => {
-      if (data?.length) {
-        this.list = data;
-        this.meta = meta;
-        this.titleKey =
-          this.filterPropertyContains(meta, 'displayType', 'title').shift() ||
-          Object.keys(data[0])[0];
-        this.descriptionKey = this.filterPropertyContains(
-          meta,
-          'displayType',
-          'description'
-        ).shift();
-      }
+    this.apiServ
+      .allItems(this.sheetName, {
+        group: this.group,
+        subgroup: this.subgroup,
+        filter: value,
+      })
+      .subscribe(({ data, meta }) => {
+        if (data?.length) {
+          this.list = data;
+          this.meta = meta;
+          this.titleKey =
+            this.filterPropertyContains(meta, 'displayType', 'title').shift() ||
+            Object.keys(data[0])[0];
+          this.descriptionKey = this.filterPropertyContains(
+            meta,
+            'displayType',
+            'description'
+          ).shift();
+        }
 
-      loading.dismiss();
-    });
+        loading.dismiss();
+      });
   }
 
   clear() {
